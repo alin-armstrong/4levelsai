@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The 4 Levels of Value</title>
+<meta name="description" content="Map your expertise to all 4 levels of value and discover what's possible. A Market Disruptors tool.">
+<style>
+  * { box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  html, body { margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f5f5f7;
+    --surface: #ffffff;
+    --surface-2: #fbfbfd;
+    --text: #1d1d1f;
+    --text-secondary: #6e6e73;
+    --text-tertiary: #86868b;
+    --separator: rgba(0,0,0,0.08);
+    --separator-strong: rgba(0,0,0,0.12);
+    --accent: #0071e3;
+    --accent-hover: #0077ed;
+    --accent-pressed: #006edb;
+    --accent-tint: #e8f1fc;
+    --success: #28a745;
+    --error: #ff3b30;
+    --error-bg: #fff5f5;
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+    --radius-xl: 22px;
+
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.04);
+    --shadow-md: 0 2px 8px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
+    --shadow-lg: 0 4px 16px rgba(0,0,0,0.05), 0 24px 48px rgba(0,0,0,0.08);
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 3rem 1.25rem;
+    line-height: 1.47059;
+    letter-spacing: -0.022em;
+  }
+
+  .wrap { max-width: 700px; margin: 0 auto; }
+
+  .hero { text-align: center; padding: 2.5rem 1rem 3rem; }
+  .eyebrow {
+    font-size: 14px; font-weight: 500; color: var(--accent);
+    margin-bottom: 12px; letter-spacing: -0.016em;
+  }
+  .hero-title {
+    font-size: 48px; font-weight: 600; line-height: 1.08349;
+    letter-spacing: -0.003em; color: var(--text); margin: 0 0 16px;
+  }
+  .hero-sub {
+    font-size: 19px; font-weight: 400; line-height: 1.4211;
+    color: var(--text-secondary); max-width: 540px; margin: 0 auto;
+    letter-spacing: 0.012em;
+  }
+
+  .card {
+    background: var(--surface); border-radius: var(--radius-xl);
+    padding: 2rem; margin-bottom: 1rem; box-shadow: var(--shadow-md);
+  }
+
+  .label {
+    display: block; font-size: 13px; font-weight: 500;
+    color: var(--text-secondary); margin-bottom: 10px; letter-spacing: -0.008em;
+  }
+
+  .input {
+    width: 100%; padding: 14px 16px; font-size: 17px; font-family: inherit;
+    background: var(--surface-2); border: 1px solid var(--separator);
+    border-radius: var(--radius-md); color: var(--text);
+    transition: all 0.2s ease; line-height: 1.4; letter-spacing: -0.022em;
+  }
+  .input::placeholder { color: var(--text-tertiary); }
+  .input:focus {
+    outline: none; border-color: var(--accent); background: var(--surface);
+    box-shadow: 0 0 0 4px rgba(0,113,227,0.12);
+  }
+  .textarea { min-height: 88px; resize: vertical; }
+
+  .level-picker {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 10px; margin-top: 4px;
+  }
+  .pick {
+    padding: 18px 8px; background: var(--surface-2);
+    border: 1px solid var(--separator); border-radius: var(--radius-md);
+    cursor: pointer; font-family: inherit; text-align: center;
+    transition: all 0.2s ease; color: var(--text);
+  }
+  .pick:hover { background: #f0f0f2; border-color: var(--separator-strong); }
+  .pick.selected {
+    background: var(--accent); border-color: var(--accent); color: #ffffff;
+    box-shadow: 0 4px 14px rgba(0,113,227,0.3);
+  }
+  .pick-num { font-size: 22px; font-weight: 600; line-height: 1; letter-spacing: -0.025em; }
+  .pick-lbl {
+    font-size: 11px; font-weight: 500; margin-top: 6px;
+    color: var(--text-secondary); letter-spacing: -0.005em;
+  }
+  .pick.selected .pick-lbl { color: rgba(255,255,255,0.85); }
+
+  .submit {
+    width: 100%; padding: 16px 20px; background: var(--accent); color: #ffffff;
+    border: none; border-radius: 980px; font-size: 17px; font-weight: 500;
+    cursor: pointer; font-family: inherit; margin-top: 1.5rem;
+    transition: all 0.2s ease; letter-spacing: -0.022em;
+  }
+  .submit:hover:not(:disabled) { background: var(--accent-hover); transform: scale(1.005); }
+  .submit:active:not(:disabled) { background: var(--accent-pressed); transform: scale(0.995); }
+  .submit:disabled { background: #d2d2d7; cursor: not-allowed; }
+
+  .loading {
+    background: var(--surface); padding: 3rem 2rem;
+    border-radius: var(--radius-xl); text-align: center;
+    margin-bottom: 1rem; box-shadow: var(--shadow-md);
+  }
+  .spinner {
+    display: inline-block; width: 28px; height: 28px;
+    border: 2px solid var(--separator); border-top-color: var(--accent);
+    border-radius: 50%; animation: spin 0.6s linear infinite; margin-bottom: 20px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { font-size: 17px; font-weight: 500; color: var(--text); letter-spacing: -0.022em; }
+  .loading-sub { font-size: 14px; color: var(--text-secondary); margin-top: 8px; letter-spacing: -0.016em; }
+
+  .results { animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .results-header {
+    background: var(--surface); padding: 2rem 2rem 1.5rem;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    text-align: center; box-shadow: var(--shadow-md);
+    border-bottom: 1px solid var(--separator);
+  }
+  .results-eyebrow {
+    font-size: 13px; font-weight: 500; color: var(--text-secondary);
+    margin-bottom: 10px; letter-spacing: -0.008em;
+  }
+  .results-expertise {
+    font-size: 24px; font-weight: 600; line-height: 1.16667;
+    color: var(--text); max-width: 520px; margin: 0 auto;
+    letter-spacing: -0.003em;
+  }
+
+  .ladder-tabs {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    background: var(--surface); padding: 0;
+    box-shadow: var(--shadow-md);
+    border-bottom: 1px solid var(--separator);
+  }
+  .tab {
+    padding: 18px 8px; background: transparent; border: none;
+    cursor: pointer; font-family: inherit; color: var(--text-secondary);
+    transition: all 0.2s ease; text-align: center; position: relative;
+    border-bottom: 2px solid transparent; letter-spacing: -0.022em;
+  }
+  .tab:hover:not(.active) { color: var(--text); background: var(--surface-2); }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab.current-level::after {
+    content: 'You'; position: absolute; top: 6px; right: 8px;
+    font-size: 9px; font-weight: 600; background: var(--accent-tint);
+    color: var(--accent); padding: 2px 6px; border-radius: 4px; letter-spacing: 0;
+  }
+  .tab-num { font-size: 22px; font-weight: 600; line-height: 1; }
+  .tab-lbl { font-size: 11px; font-weight: 500; margin-top: 6px; }
+
+  .panel {
+    background: var(--surface); padding: 2.25rem;
+    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+    box-shadow: var(--shadow-md);
+  }
+
+  .panel-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 1rem; margin-bottom: 1.75rem; padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--separator); flex-wrap: wrap;
+  }
+  .panel-left { flex: 1; min-width: 240px; }
+  .level-eyebrow {
+    font-size: 13px; font-weight: 500; color: var(--accent);
+    margin-bottom: 10px; letter-spacing: -0.008em;
+  }
+  .level-name-big {
+    font-size: 24px; font-weight: 600; line-height: 1.16667;
+    color: var(--text); margin: 0; letter-spacing: -0.003em;
+  }
+  .income {
+    background: var(--accent-tint); padding: 12px 16px;
+    border-radius: var(--radius-md); text-align: right; min-width: 140px;
+  }
+  .income-lbl {
+    font-size: 11px; font-weight: 500; color: var(--accent);
+    margin-bottom: 4px; letter-spacing: -0.005em;
+  }
+  .income-val {
+    font-size: 17px; font-weight: 600; color: var(--accent);
+    line-height: 1; letter-spacing: -0.022em;
+  }
+
+  .section { margin-bottom: 1.75rem; }
+  .section:last-child { margin-bottom: 0; }
+  .section-label {
+    font-size: 13px; font-weight: 500; color: var(--text-secondary);
+    margin-bottom: 14px; letter-spacing: -0.008em;
+  }
+  .section-body {
+    font-size: 17px; line-height: 1.47059;
+    color: var(--text); letter-spacing: -0.022em;
+  }
+
+  .bullets { list-style: none; padding: 0; margin: 0; }
+  .bullet {
+    padding: 14px 0; border-bottom: 1px solid var(--separator);
+    display: flex; gap: 16px; align-items: flex-start;
+    font-size: 17px; line-height: 1.47059; letter-spacing: -0.022em;
+  }
+  .bullet:last-child { border-bottom: none; }
+  .bullet:first-child { padding-top: 0; }
+  .bullet-num {
+    font-size: 13px; font-weight: 600; color: var(--accent);
+    background: var(--accent-tint); min-width: 28px; height: 28px;
+    border-radius: 50%; display: inline-flex; align-items: center;
+    justify-content: center; flex-shrink: 0; letter-spacing: 0;
+  }
+
+  .quote {
+    background: var(--surface-2); padding: 18px 20px;
+    border-radius: var(--radius-md); font-size: 19px;
+    line-height: 1.42105; color: var(--text); font-weight: 500;
+    letter-spacing: 0.012em; border-left: 3px solid var(--accent);
+  }
+
+  .actions {
+    margin-top: 2rem; display: flex; gap: 10px; flex-wrap: wrap;
+  }
+  .action {
+    flex: 1; min-width: 160px; padding: 13px 22px;
+    border-radius: 980px; font-size: 15px; font-weight: 500;
+    cursor: pointer; font-family: inherit; transition: all 0.2s ease;
+    text-align: center; letter-spacing: -0.022em;
+  }
+  .action-primary {
+    background: var(--accent); color: #ffffff; border: 1px solid var(--accent);
+  }
+  .action-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+  .action-primary:active { transform: scale(0.98); }
+  .action-secondary {
+    background: var(--surface); color: var(--accent);
+    border: 1px solid var(--separator-strong);
+  }
+  .action-secondary:hover { background: var(--surface-2); border-color: var(--accent); }
+  .action-secondary:active { transform: scale(0.98); }
+
+  .restart {
+    display: block; margin: 1.5rem auto 0; background: none; border: none;
+    color: var(--accent); cursor: pointer; font-size: 15px;
+    font-family: inherit; letter-spacing: -0.022em;
+  }
+  .restart:hover { text-decoration: underline; }
+
+  .error {
+    background: var(--error-bg); border: 1px solid rgba(255,59,48,0.2);
+    color: var(--error); padding: 14px 16px; border-radius: var(--radius-md);
+    font-size: 14px; margin-top: 1rem; line-height: 1.5; letter-spacing: -0.016em;
+  }
+  .error-retry {
+    background: var(--error); color: #fff; border: none; padding: 8px 16px;
+    border-radius: 980px; font-size: 13px; cursor: pointer; margin-top: 10px;
+    font-family: inherit; font-weight: 500; letter-spacing: -0.022em;
+  }
+  .error-retry:hover { background: #e0312a; }
+
+  .footer {
+    text-align: center; padding: 2.5rem 1rem 1rem;
+    color: var(--text-tertiary); font-size: 12px; letter-spacing: -0.005em;
+  }
+  .footer a { color: var(--text-secondary); text-decoration: none; }
+  .footer a:hover { color: var(--accent); }
+
+  .setup {
+    background: var(--surface); border-radius: var(--radius-xl);
+    padding: 1.5rem; margin-bottom: 1rem; box-shadow: var(--shadow-sm);
+  }
+  .setup-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; color: var(--text); letter-spacing: -0.016em; }
+  .setup-body { font-size: 13px; color: var(--text-secondary); line-height: 1.5; letter-spacing: -0.008em; }
+  .setup a { color: var(--accent); text-decoration: none; }
+  .setup a:hover { text-decoration: underline; }
+  .key-input-row { display: flex; gap: 8px; margin-top: 12px; }
+  .key-input-row .input { flex: 1; padding: 10px 14px; font-size: 13px; font-family: ui-monospace, monospace; }
+  .key-save {
+    padding: 10px 18px; background: var(--accent); color: #fff;
+    border: none; border-radius: 980px; font-size: 13px; font-weight: 500;
+    cursor: pointer; font-family: inherit; letter-spacing: -0.022em;
+  }
+  .key-save:hover { background: var(--accent-hover); }
+  .key-status {
+    margin-top: 10px; font-size: 13px; color: var(--success);
+    display: flex; align-items: center; gap: 8px; letter-spacing: -0.008em;
+  }
+  .key-status::before { content: '●'; }
+  .key-clear {
+    background: none; border: none; color: var(--text-tertiary);
+    text-decoration: underline; cursor: pointer; font-size: 12px;
+    font-family: inherit; margin-left: auto; letter-spacing: -0.005em;
+  }
+  .key-clear:hover { color: var(--text-secondary); }
+
+  @media (max-width: 600px) {
+    body { padding: 1.5rem 1rem; }
+    .hero { padding: 1.5rem 0 2rem; }
+    .hero-title { font-size: 36px; }
+    .hero-sub { font-size: 17px; }
+    .card, .panel { padding: 1.5rem; }
+    .level-name-big { font-size: 20px; }
+    .pick { padding: 14px 6px; }
+    .pick-num { font-size: 19px; }
+    .income { min-width: 100%; text-align: left; }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000000;
+      --surface: #1c1c1e;
+      --surface-2: #2c2c2e;
+      --text: #f5f5f7;
+      --text-secondary: #98989d;
+      --text-tertiary: #6e6e73;
+      --separator: rgba(255,255,255,0.1);
+      --separator-strong: rgba(255,255,255,0.15);
+      --accent: #2997ff;
+      --accent-hover: #4ba8ff;
+      --accent-pressed: #1a8aff;
+      --accent-tint: rgba(41,151,255,0.15);
+      --error-bg: rgba(255,59,48,0.1);
+    }
+    .pick:hover { background: #3a3a3c; }
+    .submit:disabled { background: #3a3a3c; color: #6e6e73; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap" id="app"></div>
+
+<div class="footer">
+  A <a href="#">Market Disruptors</a> tool · Built on the 4 Levels of Value framework
+</div>
+
+<script>
+const MODE = 'proxy';
+const PROXY_URL = 'https://four-levels-proxy.alin-581.workers.dev';
+
+const app = document.getElementById('app');
+
+const levels = [
+  { num: 1, name: 'Implementation', label: 'Muscle' },
+  { num: 2, name: 'Unification', label: 'Manage' },
+  { num: 3, name: 'Communication', label: 'Message' },
+  { num: 4, name: 'Imagination', label: 'Invent' }
+];
+
+let state = {
+  phase: 'input',
+  expertise: '',
+  currentLevel: 1,
+  activeTab: 1,
+  ladder: null,
+  error: null,
+  retryCount: 0,
+  apiKey: localStorage.getItem('anthropic_api_key') || ''
+};
+
+function render() {
+  if (state.phase === 'input') renderInput();
+  else if (state.phase === 'loading') renderLoading();
+  else if (state.phase === 'results') renderResults();
+}
+
+function renderInput() {
+  const showKeySetup = MODE === 'byok';
+  const hasKey = state.apiKey && state.apiKey.startsWith('sk-ant-');
+
+  app.innerHTML = `
+    <div class="hero">
+      <div class="eyebrow">Market Disruptors</div>
+      <h1 class="hero-title">The 4 Levels of Value.</h1>
+      <p class="hero-sub">Tell us your expertise. We'll map it to all four levels and show you exactly what's possible — and what's blocking you from the next rung.</p>
+    </div>
+
+    ${showKeySetup ? `
+      <div class="setup">
+        <div class="setup-title">${hasKey ? 'API key saved' : 'Set up'}</div>
+        ${hasKey ? `
+          <div class="setup-body">Your key is stored in your browser only. Never sent anywhere except Anthropic.</div>
+          <div class="key-status">
+            Ready
+            <button class="key-clear" id="key-clear">Remove key</button>
+          </div>
+        ` : `
+          <div class="setup-body">Get an Anthropic API key at <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a>. Costs about a cent per ladder. Your key stays in your browser.</div>
+          <div class="key-input-row">
+            <input type="password" class="input" id="key-input" placeholder="sk-ant-..." autocomplete="off">
+            <button class="key-save" id="key-save">Save</button>
+          </div>
+        `}
+      </div>
+    ` : ''}
+
+    <div class="card">
+      <div style="margin-bottom: 1.5rem;">
+        <label class="label">Your expertise</label>
+        <textarea class="input textarea" id="expertise" placeholder="e.g. residential plumbing — 15 years"></textarea>
+      </div>
+
+      <div>
+        <label class="label">Where are you operating right now?</label>
+        <div class="level-picker">
+          ${levels.map(l => `
+            <button class="pick ${state.currentLevel === l.num ? 'selected' : ''}" data-level="${l.num}">
+              <div class="pick-num">0${l.num}</div>
+              <div class="pick-lbl">${l.label}</div>
+            </button>
+          `).join('')}
+        </div>
+      </div>
+
+      <button class="submit" id="submit" disabled>Map my climb</button>
+      <div id="error-slot"></div>
+    </div>
+  `;
+
+  const textarea = document.getElementById('expertise');
+  const submit = document.getElementById('submit');
+
+  textarea.value = state.expertise;
+  updateSubmit();
+
+  textarea.addEventListener('input', e => {
+    state.expertise = e.target.value;
+    updateSubmit();
+  });
+
+  function updateSubmit() {
+    const hasExpertise = state.expertise.trim().length > 5;
+    const hasValidKey = MODE !== 'byok' || (state.apiKey && state.apiKey.startsWith('sk-ant-'));
+    submit.disabled = !hasExpertise || !hasValidKey;
+  }
+
+  document.querySelectorAll('.pick').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.currentLevel = parseInt(btn.dataset.level, 10);
+      state.activeTab = state.currentLevel;
+      document.querySelectorAll('.pick').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    });
+  });
+
+  submit.addEventListener('click', generateLadder);
+
+  const keySave = document.getElementById('key-save');
+  if (keySave) {
+    keySave.addEventListener('click', () => {
+      const input = document.getElementById('key-input');
+      const key = input.value.trim();
+      if (key.startsWith('sk-ant-')) {
+        state.apiKey = key;
+        localStorage.setItem('anthropic_api_key', key);
+        render();
+      } else {
+        input.style.borderColor = 'var(--error)';
+        input.placeholder = 'Key must start with sk-ant-...';
+      }
+    });
+  }
+
+  const keyClear = document.getElementById('key-clear');
+  if (keyClear) {
+    keyClear.addEventListener('click', () => {
+      state.apiKey = '';
+      localStorage.removeItem('anthropic_api_key');
+      render();
+    });
+  }
+
+  if (state.error) {
+    document.getElementById('error-slot').innerHTML = `
+      <div class="error">
+        ${escapeHtml(state.error)}
+        <br>
+        <button class="error-retry" id="retry">Try again</button>
+      </div>
+    `;
+    document.getElementById('retry').addEventListener('click', () => {
+      state.error = null;
+      generateLadder();
+    });
+  }
+}
+
+function renderLoading() {
+  app.innerHTML = `
+    <div class="loading">
+      <div class="spinner"></div>
+      <div class="loading-text">Mapping your ladder</div>
+      <div class="loading-sub">Translating "${escapeHtml(state.expertise.slice(0, 60))}${state.expertise.length > 60 ? '...' : ''}" into all 4 levels</div>
+      ${state.retryCount > 0 ? `<div class="loading-sub">Retry attempt ${state.retryCount}</div>` : ''}
+    </div>
+  `;
+}
+
+async function callAPI(prompt, attempt = 1) {
+  const maxAttempts = 2;
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 90000);
+
+    const headers = { "Content-Type": "application/json" };
+    let endpoint;
+    let body;
+
+    if (MODE === 'byok') {
+      endpoint = "https://api.anthropic.com/v1/messages";
+      headers["x-api-key"] = state.apiKey;
+      headers["anthropic-version"] = "2023-06-01";
+      headers["anthropic-dangerous-direct-browser-access"] = "true";
+      body = {
+        model: "claude-sonnet-4-5",
+        max_tokens: 2000,
+        messages: [{ role: "user", content: prompt }]
+      };
+    } else {
+      endpoint = PROXY_URL;
+      body = { prompt };
+    }
+
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(body),
+      signal: controller.signal
+    });
+
+    clearTimeout(timeout);
+
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(`API ${response.status}: ${text.slice(0, 200)}`);
+    }
+
+    return await response.json();
+  } catch (err) {
+    if (attempt < maxAttempts && err.name !== 'AbortError') {
+      state.retryCount = attempt;
+      render();
+      await new Promise(r => setTimeout(r, 1500));
+      return callAPI(prompt, attempt + 1);
+    }
+    throw err;
+  }
+}
+
+async function generateLadder() {
+  state.phase = 'loading';
+  state.error = null;
+  state.retryCount = 0;
+  render();
+
+  const prompt = `You are an expert business strategist trained in Myron Golden's 4 Levels of Value framework.
+
+The user's expertise is: "${state.expertise}"
+They currently operate at Level ${state.currentLevel}.
+
+For their SPECIFIC expertise, map what each of the 4 levels looks like for them. Be concrete and specific to their domain.
+
+The 4 levels:
+- Level 1 IMPLEMENTATION: Trading muscle/time for money. Doing the work yourself. $25k-$80k.
+- Level 2 UNIFICATION: Managing others who do the work. Multiplication through people. $60k-$250k.
+- Level 3 COMMUNICATION: Using words/message to create value at scale. $100k-$100M.
+- Level 4 IMAGINATION: Creating innovative/disruptive solutions at scale. $1M-$1B+.
+
+For each level, return:
+- example: 1 concrete sentence describing what THIS person doing THIS expertise looks like at this level. Be specific.
+- income: A realistic income range for this level applied to their expertise.
+- moves: Exactly 3 short actionable moves (8-14 words each) to operate at or climb to this level.
+- trap: 1 sentence — the specific reason people get stuck at this level in this domain.
+- quote: 1 sharp quotable line (under 20 words) — the mindset shift required. Make it provocative.
+
+Return ONLY valid JSON, no preamble, no markdown, no code fences:
+{
+  "1": { "example": "...", "income": "...", "moves": ["...", "...", "..."], "trap": "...", "quote": "..." },
+  "2": { "example": "...", "income": "...", "moves": ["...", "...", "..."], "trap": "...", "quote": "..." },
+  "3": { "example": "...", "income": "...", "moves": ["...", "...", "..."], "trap": "...", "quote": "..." },
+  "4": { "example": "...", "income": "...", "moves": ["...", "...", "..."], "trap": "...", "quote": "..." }
+}`;
+
+  try {
+    const data = await callAPI(prompt);
+
+    let text = '';
+    if (Array.isArray(data.content)) {
+      text = data.content.filter(b => b.type === 'text').map(b => b.text).join('\n');
+    } else if (data.text) {
+      text = data.text;
+    }
+
+    text = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    const firstBrace = text.indexOf('{');
+    const lastBrace = text.lastIndexOf('}');
+    if (firstBrace === -1 || lastBrace === -1) throw new Error('Response did not contain valid data');
+    text = text.slice(firstBrace, lastBrace + 1);
+
+    const ladder = JSON.parse(text);
+
+    for (let i = 1; i <= 4; i++) {
+      if (!ladder[i] || !ladder[i].example || !ladder[i].moves) {
+        throw new Error('Response missing required fields');
+      }
+    }
+
+    state.ladder = ladder;
+    state.activeTab = state.currentLevel;
+    state.phase = 'results';
+    state.retryCount = 0;
+    render();
+  } catch (err) {
+    state.phase = 'input';
+    let msg = err.message || 'Connection failed';
+    if (err.name === 'AbortError') msg = 'Request timed out';
+    if (msg.includes('Failed to fetch')) msg = 'Network connection failed';
+    if (msg.includes('401')) msg = 'Your API key was rejected. Check that it\'s valid.';
+    if (msg.includes('429')) msg = 'Rate limited. Wait a moment and try again.';
+    state.error = msg;
+    render();
+  }
+}
+
+function renderResults() {
+  const data = state.ladder[state.activeTab];
+  const meta = levels[state.activeTab - 1];
+  const isCurrent = state.activeTab === state.currentLevel;
+  const isNext = state.activeTab === state.currentLevel + 1;
+
+  app.innerHTML = `
+    <div class="results">
+      <div class="results-header">
+        <div class="results-eyebrow">Your ladder</div>
+        <div class="results-expertise">${escapeHtml(state.expertise.slice(0, 120))}${state.expertise.length > 120 ? '...' : ''}</div>
+      </div>
+
+      <div class="ladder-tabs">
+        ${levels.map(l => `
+          <button class="tab ${state.activeTab === l.num ? 'active' : ''} ${state.currentLevel === l.num ? 'current-level' : ''}" data-tab="${l.num}">
+            <div class="tab-num">0${l.num}</div>
+            <div class="tab-lbl">${l.label}</div>
+          </button>
+        `).join('')}
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-left">
+            <div class="level-eyebrow">Level ${state.activeTab} · ${meta.name}</div>
+            <h2 class="level-name-big">${escapeHtml(data.example)}</h2>
+          </div>
+          <div class="income">
+            <div class="income-lbl">Income range</div>
+            <div class="income-val">${escapeHtml(data.income)}</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="quote">"${escapeHtml(data.quote)}"</div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">${isCurrent ? 'How to maximize this level' : isNext ? 'Your next 3 moves to climb here' : 'What this level requires'}</div>
+          <ul class="bullets">
+            ${data.moves.map((m, i) => `
+              <li class="bullet">
+                <span class="bullet-num">${i + 1}</span>
+                <span>${escapeHtml(m)}</span>
+              </li>
+            `).join('')}
+          </ul>
+        </div>
+
+        <div class="section">
+          <div class="section-label">The trap of this level</div>
+          <div class="section-body">${escapeHtml(data.trap)}</div>
+        </div>
+
+        <div class="actions">
+          <button class="action action-primary" data-act="share">Copy my ladder</button>
+          <button class="action action-secondary" data-act="print">Save as PDF</button>
+        </div>
+      </div>
+
+      <button class="restart">Start over with different expertise</button>
+    </div>
+  `;
+
+  document.querySelectorAll('.tab').forEach(t => {
+    t.addEventListener('click', () => {
+      state.activeTab = parseInt(t.dataset.tab, 10);
+      render();
+    });
+  });
+
+  document.querySelector('[data-act="share"]').addEventListener('click', () => {
+    const summary = buildShareText();
+    navigator.clipboard.writeText(summary).then(() => {
+      const btn = document.querySelector('[data-act="share"]');
+      const orig = btn.textContent;
+      btn.textContent = 'Copied';
+      setTimeout(() => { btn.textContent = orig; }, 2000);
+    });
+  });
+
+  document.querySelector('[data-act="print"]').addEventListener('click', () => {
+    window.print();
+  });
+
+  document.querySelector('.restart').addEventListener('click', () => {
+    state = {
+      phase: 'input', expertise: '', currentLevel: 1, activeTab: 1,
+      ladder: null, error: null, retryCount: 0,
+      apiKey: state.apiKey
+    };
+    render();
+  });
+}
+
+function buildShareText() {
+  const lines = [
+    `MY 4 LEVELS OF VALUE LADDER`,
+    `Expertise: ${state.expertise}`,
+    ``
+  ];
+  for (let i = 1; i <= 4; i++) {
+    const d = state.ladder[i];
+    const meta = levels[i - 1];
+    lines.push(`━━━ LEVEL ${i}: ${meta.name.toUpperCase()} ${i === state.currentLevel ? '← YOU' : ''} ━━━`);
+    lines.push(`What it looks like: ${d.example}`);
+    lines.push(`Income: ${d.income}`);
+    lines.push(`Quote: "${d.quote}"`);
+    lines.push(`Moves:`);
+    d.moves.forEach((m, idx) => lines.push(`  ${idx + 1}. ${m}`));
+    lines.push(`Trap: ${d.trap}`);
+    lines.push(``);
+  }
+  return lines.join('\n');
+}
+
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+render();
+</script>
+</body>
+</html>
