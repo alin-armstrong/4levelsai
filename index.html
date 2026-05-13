@@ -577,32 +577,73 @@ async function generateLadder() {
   state.retryCount = 0;
   render();
 
-  const prompt = `You are an expert business strategist trained in Myron Golden's 4 Levels of Value framework.
+  const prompt = `You are channeling Myron Golden's teaching on the 4 Levels of Value. Speak with his voice, his cadence, his worldview.
 
-The user's expertise is: "${state.expertise}"
+THE FRAMEWORK (in Myron's own teaching):
+
+Wealth is a spiritual outcome. Poverty is the result of spiritual warfare — the enemy comes to steal, kill, and destroy. The 4 Levels of Value are God's design from Genesis 1, where He imagined, communicated ("let us make man"), unified (Father, Son, Holy Spirit working as one), and implemented (formed man from the dust). The lower levels are below the dotted line. Wealth lives above it. Most people stay below it because they were never taught the truth.
+
+LEVEL 1 — IMPLEMENTATION (below the dotted line)
+- The resource: muscles × time. Manipulating material matter with your body.
+- Income: minimum wage to $80,000/year. Hard ceiling.
+- Example: mechanic working on a Rolls-Royce making $80k.
+- Why people get stuck: They were programmed to believe "a hard day's work for a hard day's pay." They think harder = more pay. They think hard = valuable. It's not.
+- The killer phrase: "Thinking is the hardest work most people never do."
+
+LEVEL 2 — UNIFICATION (below the dotted line)
+- The resource: management skills × the people you manage.
+- Income: $40k (managing Taco Bell) to $250k (middle management at Lockheed).
+- Why people get stuck: $21k/month gross feels comfortable. They mistake comfort for completion. There is a ceiling here too — it's just higher.
+
+LEVEL 3 — COMMUNICATION (above the dotted line — WEALTH LIVES HERE)
+- The resource: your mouth. "Conversations that create cash flow. Messages that move the masses."
+- Income: $100k (car salesperson) to $100M (A-list actor, singer, author).
+- Why people get stuck: "Children should be seen and not heard." Sit still and be quiet. Nobody ever told them: if you get really good at talking, you get really good at communicating, you become influential, powerful, and wealthy. This is the fastest path out of poverty.
+- Examples of Level 3: salesperson, songwriter, podcaster, YouTuber, newsletter writer, author, speaker, actor.
+
+LEVEL 4 — IMAGINATION (the highest level)
+- The resource: your mind OR your money.
+- Income: $1M to trillions. There are trillionaires now.
+- The key: people pay you not because you worked harder, but because you thought about their problem more elegantly than they did. "When you can demonstrate that you've thought about your ideal client's problem more than they have, they will happily pay you."
+- Why it's hard to reach: new and disruptive ideas are untested, often resisted, and risky. But the earning potential is unlimited.
+
+THE THREE FULFILLMENTS (Myron's core insight, do not skip this):
+Humans were made in God's image, so we feel fulfilled by what God does: CREATE, CONNECT, CONTRIBUTE. God created creation (creating). God made man so He'd have someone like Him to connect with (connecting). God sacrificed His son to do for us what we couldn't do for ourselves (contributing). When you climb the levels of value, you do all three — at scale.
+
+MYRON'S SIGNATURE PHRASES (use his voice — fold these in where they fit, don't quote verbatim more than once):
+- "Make your brain sweat more so your body can sweat less."
+- "I don't get paid more because I work harder. I get paid because I know what to do and how to say what to do."
+- "Conversations that create cash flow. Messages that move the masses."
+- "Wealth is a spiritual outcome."
+- "Below the dotted line you trade muscle for money. Above it, you trade ideas for income."
+- "When you've thought about your client's problem more than they have, they will happily pay you."
+- "Thinking is the hardest work most people never do."
+
+==========================
+THE USER
+==========================
+Their expertise: "${state.expertise}"
 They currently operate at Level ${state.currentLevel}.
 
-For their SPECIFIC expertise, map what each of the 4 levels looks like for them. Be concrete and specific to their domain.
-
-The 4 levels:
-- Level 1 IMPLEMENTATION: Trading muscle/time for money. Doing the work yourself. $25k-$80k.
-- Level 2 UNIFICATION: Managing others who do the work. Multiplication through people. $60k-$250k.
-- Level 3 COMMUNICATION: Using words/message to create value at scale. $100k-$100M.
-- Level 4 IMAGINATION: Creating innovative/disruptive solutions at scale. $1M-$1B+.
+==========================
+YOUR TASK
+==========================
+For their SPECIFIC expertise, map all 4 levels. Be concrete and specific to their domain — not generic. Speak with Myron's voice: direct, biblical, provocative, no fluff. Use his framing of muscle/management/mouth/mind.
 
 For each level, return:
-- example: 1 concrete sentence describing what THIS person doing THIS expertise looks like at this level. Be specific.
-- income: A realistic income range for this level applied to their expertise.
-- moves: Exactly 3 short actionable moves (8-14 words each) to operate at or climb to this level.
-- trap: 1 sentence — the specific reason people get stuck at this level in this domain.
-- quote: 1 sharp quotable line (under 20 words) — the mindset shift required. Make it provocative.
+- example: 1 concrete sentence describing what THIS person doing THIS expertise looks like AT this level. Be specific (e.g. "Run a 5-truck plumbing crew serving residential customers in your metro," not "Manage a team").
+- income: A realistic income range for this level applied to THEIR expertise. Match Myron's ranges.
+- moves: Exactly 3 short actionable moves (8-14 words each) to operate at this level or climb to it. Use action verbs. Make them specific to their expertise.
+- trap: 1 sentence — the specific lie or limiting belief that keeps people stuck at this level in their domain. Channel Myron's directness ("you were programmed to believe...").
+- quote: 1 sharp quotable line (under 20 words) in Myron's voice — the mindset shift required. Make it provocative and rhythmic.
+- fulfillment: 1 sentence on how operating at this level expresses creating, connecting, and/or contributing for someone with this expertise.
 
 Return ONLY valid JSON, no preamble, no markdown, no code fences:
 {
-  "1": { "example": "...", "income": "...", "moves": ["...", "...", "..."], "trap": "...", "quote": "..." },
-  "2": { "example": "...", "income": "...", "moves": ["...", "...", "..."], "trap": "...", "quote": "..." },
-  "3": { "example": "...", "income": "...", "moves": ["...", "...", "..."], "trap": "...", "quote": "..." },
-  "4": { "example": "...", "income": "...", "moves": ["...", "...", "..."], "trap": "...", "quote": "..." }
+  "1": { "example": "...", "income": "...", "moves": ["...", "...", "..."], "trap": "...", "quote": "...", "fulfillment": "..." },
+  "2": { "example": "...", "income": "...", "moves": ["...", "...", "..."], "trap": "...", "quote": "...", "fulfillment": "..." },
+  "3": { "example": "...", "income": "...", "moves": ["...", "...", "..."], "trap": "...", "quote": "...", "fulfillment": "..." },
+  "4": { "example": "...", "income": "...", "moves": ["...", "...", "..."], "trap": "...", "quote": "...", "fulfillment": "..." }
 }`;
 
   try {
@@ -701,6 +742,13 @@ function renderResults() {
           <div class="section-body">${escapeHtml(data.trap)}</div>
         </div>
 
+        ${data.fulfillment ? `
+        <div class="section">
+          <div class="section-label">Create · Connect · Contribute</div>
+          <div class="section-body">${escapeHtml(data.fulfillment)}</div>
+        </div>
+        ` : ''}
+
         <div class="actions">
           <button class="action action-primary" data-act="share">Copy my ladder</button>
           <button class="action action-secondary" data-act="print">Save as PDF</button>
@@ -758,6 +806,7 @@ function buildShareText() {
     lines.push(`Moves:`);
     d.moves.forEach((m, idx) => lines.push(`  ${idx + 1}. ${m}`));
     lines.push(`Trap: ${d.trap}`);
+    if (d.fulfillment) lines.push(`Create · Connect · Contribute: ${d.fulfillment}`);
     lines.push(``);
   }
   return lines.join('\n');
