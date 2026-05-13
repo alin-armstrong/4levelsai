@@ -282,6 +282,246 @@
   }
   .error-retry:hover { background: #e0312a; }
 
+  /* TIMELINE OVERVIEW */
+  .overview {
+    background: var(--surface);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-md);
+  }
+  .overview-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0 0 6px;
+    letter-spacing: -0.003em;
+  }
+  .overview-sub {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin: 0 0 1.75rem;
+    line-height: 1.4;
+    letter-spacing: -0.016em;
+  }
+
+  .timeline { position: relative; padding-left: 0; }
+  .timeline-rail {
+    position: absolute; left: 19px; top: 8px; bottom: 8px;
+    width: 2px; background: var(--separator);
+    border-radius: 2px;
+  }
+
+  .timeline-item {
+    position: relative;
+    padding: 10px 0 10px 56px;
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+  }
+  .timeline-dot {
+    position: absolute;
+    left: 8px;
+    top: 14px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 2px solid var(--separator-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    z-index: 1;
+  }
+  .timeline-item.above .timeline-dot {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(0,113,227,0.3);
+  }
+  .timeline-content { flex: 1; }
+  .timeline-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+  }
+  .timeline-name {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.022em;
+  }
+  .timeline-item.above .timeline-name { color: var(--accent); }
+  .timeline-income {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    letter-spacing: -0.008em;
+  }
+  .timeline-resource {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    letter-spacing: -0.016em;
+  }
+
+  .dotted-line {
+    position: relative;
+    height: 30px;
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .dotted-line::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: 50%;
+    border-top: 1.5px dashed var(--accent);
+    opacity: 0.4;
+  }
+  .dotted-line-label {
+    position: relative;
+    background: var(--surface);
+    padding: 0 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* SAMPLE LADDER (collapsed by default) */
+  .sample {
+    background: var(--surface);
+    border-radius: var(--radius-xl);
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .sample-toggle {
+    width: 100%;
+    padding: 18px 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    text-align: left;
+    color: var(--text);
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.016em;
+    transition: background 0.15s ease;
+  }
+  .sample-toggle:hover { background: var(--surface-2); }
+  .sample-toggle-left { display: flex; align-items: center; gap: 10px; }
+  .sample-toggle-icon {
+    width: 24px; height: 24px;
+    background: var(--accent-tint);
+    color: var(--accent);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .sample-toggle-arrow {
+    color: var(--text-tertiary);
+    font-size: 12px;
+    transition: transform 0.2s ease;
+  }
+  .sample.open .sample-toggle-arrow { transform: rotate(180deg); }
+
+  .sample-body {
+    display: none;
+    padding: 0 20px 20px;
+    border-top: 1px solid var(--separator);
+  }
+  .sample.open .sample-body { display: block; }
+
+  .sample-meta {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 16px 0 14px;
+    letter-spacing: -0.008em;
+  }
+  .sample-meta strong { color: var(--text); font-weight: 600; }
+
+  .sample-row {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--separator);
+  }
+  .sample-row:last-child { border-bottom: none; padding-bottom: 4px; }
+  .sample-row-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+  .sample-level {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: -0.005em;
+  }
+  .sample-income {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+  .sample-body-text {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.5;
+    letter-spacing: -0.016em;
+  }
+
+  /* HOW IT WORKS bar above form */
+  .how-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 14px 16px;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    color: var(--text-secondary);
+    font-size: 13px;
+    letter-spacing: -0.008em;
+  }
+  .how-step { display: flex; align-items: center; gap: 8px; }
+  .how-step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--accent-tint);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .how-arrow { color: var(--text-tertiary); font-size: 11px; }
+
+  @media (max-width: 600px) {
+    .timeline-head { flex-direction: column; align-items: flex-start; gap: 2px; }
+    .timeline-item { padding-left: 48px; }
+    .how-bar { gap: 10px; font-size: 12px; }
+  }
+
   .footer {
     text-align: center; padding: 2.5rem 1rem 1rem;
     color: var(--text-tertiary); font-size: 12px; letter-spacing: -0.005em;
@@ -396,7 +636,117 @@ function renderInput() {
     <div class="hero">
       <div class="eyebrow">Market Disruptors</div>
       <h1 class="hero-title">The 4 Levels of Value.</h1>
-      <p class="hero-sub">Tell us your expertise. We'll map it to all four levels and show you exactly what's possible — and what's blocking you from the next rung.</p>
+      <p class="hero-sub">Most people trade muscle for money their whole lives. The wealthy trade something else. Find out where you are — and exactly how to climb.</p>
+    </div>
+
+    <div class="overview">
+      <h2 class="overview-title">Where wealth lives</h2>
+      <p class="overview-sub">There are four levels of value in the earth. Wealth is created above the dotted line.</p>
+
+      <div class="timeline">
+        <div class="timeline-rail"></div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot">1</div>
+          <div class="timeline-content">
+            <div class="timeline-head">
+              <div class="timeline-name">Implementation</div>
+              <div class="timeline-income">$25k – $80k</div>
+            </div>
+            <div class="timeline-resource">Muscles × time. Trading your body for dollars per hour.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot">2</div>
+          <div class="timeline-content">
+            <div class="timeline-head">
+              <div class="timeline-name">Unification</div>
+              <div class="timeline-income">$40k – $250k</div>
+            </div>
+            <div class="timeline-resource">Management × people. Multiplying through others.</div>
+          </div>
+        </div>
+
+        <div class="dotted-line">
+          <span class="dotted-line-label">Wealth lives above this line</span>
+        </div>
+
+        <div class="timeline-item above">
+          <div class="timeline-dot">3</div>
+          <div class="timeline-content">
+            <div class="timeline-head">
+              <div class="timeline-name">Communication</div>
+              <div class="timeline-income">$100k – $100M</div>
+            </div>
+            <div class="timeline-resource">Your mouth. Conversations that create cash flow. Messages that move the masses.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item above">
+          <div class="timeline-dot">4</div>
+          <div class="timeline-content">
+            <div class="timeline-head">
+              <div class="timeline-name">Imagination</div>
+              <div class="timeline-income">$1M – $1B+</div>
+            </div>
+            <div class="timeline-resource">Your mind. Solving problems more elegantly than anyone has before.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sample" id="sample">
+      <button class="sample-toggle" id="sample-toggle">
+        <span class="sample-toggle-left">
+          <span class="sample-toggle-icon">↗</span>
+          <span>See a sample ladder before you make your own</span>
+        </span>
+        <span class="sample-toggle-arrow">▼</span>
+      </button>
+      <div class="sample-body">
+        <div class="sample-meta">Example expertise: <strong>residential plumbing — 15 years</strong></div>
+
+        <div class="sample-row">
+          <div class="sample-row-head">
+            <span class="sample-level">Level 1 · Implementation</span>
+            <span class="sample-income">$50k – $80k</span>
+          </div>
+          <div class="sample-body-text">You're the one in the truck, crawling under sinks and replacing water heaters yourself.</div>
+        </div>
+
+        <div class="sample-row">
+          <div class="sample-row-head">
+            <span class="sample-level">Level 2 · Unification</span>
+            <span class="sample-income">$120k – $300k</span>
+          </div>
+          <div class="sample-body-text">You run a 4-truck crew. Other plumbers do the work; you dispatch, schedule, and quote.</div>
+        </div>
+
+        <div class="sample-row">
+          <div class="sample-row-head">
+            <span class="sample-level">Level 3 · Communication</span>
+            <span class="sample-income">$300k – $5M</span>
+          </div>
+          <div class="sample-body-text">You build a YouTube channel teaching homeowners DIY plumbing, sell a course, license your brand to other contractors.</div>
+        </div>
+
+        <div class="sample-row">
+          <div class="sample-row-head">
+            <span class="sample-level">Level 4 · Imagination</span>
+            <span class="sample-income">$10M – $1B+</span>
+          </div>
+          <div class="sample-body-text">You invent a smart leak-detection device or a software platform that books plumbers nationwide.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="how-bar">
+      <div class="how-step"><span class="how-step-num">1</span> Enter your expertise</div>
+      <span class="how-arrow">→</span>
+      <div class="how-step"><span class="how-step-num">2</span> Pick your current level</div>
+      <span class="how-arrow">→</span>
+      <div class="how-step"><span class="how-step-num">3</span> Get your personalized ladder</div>
     </div>
 
     ${showKeySetup ? `
@@ -468,6 +818,14 @@ function renderInput() {
   });
 
   submit.addEventListener('click', generateLadder);
+
+  // Sample ladder expander
+  const sampleToggle = document.getElementById('sample-toggle');
+  if (sampleToggle) {
+    sampleToggle.addEventListener('click', () => {
+      document.getElementById('sample').classList.toggle('open');
+    });
+  }
 
   const keySave = document.getElementById('key-save');
   if (keySave) {
